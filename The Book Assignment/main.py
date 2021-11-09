@@ -1,4 +1,4 @@
-import os
+"""import os
 import re
 encode = 'utf-8'
 import codecs
@@ -11,12 +11,12 @@ with codecs.open('Book.txt', 'rb', 'utf-8', errors='replace') as f:
 
         fileContents = myFile.read()
         filecontents = myFile.replace('\\', '/')
-        print(fileContents[2])
+        print(fileContents[2])"""
 
 
 """--------------------The Code Working as intended------------------------------"""
 
-"""import os
+import os
 import re
 
 os.chdir("E:\Bayu's Stuff\Work")
@@ -30,4 +30,4 @@ for word in key:
     if key[word] == 1:
         print (word)
 
-file.close()"""
+file.close()
