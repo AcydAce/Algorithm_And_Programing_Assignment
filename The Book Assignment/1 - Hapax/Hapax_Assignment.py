@@ -17,10 +17,9 @@ with codecs.open('Book.txt', 'rb', 'utf-8', errors='replace') as f:             
 
 """--------------------The Code Working as intended------------------------------"""
 
-import os
+
 import re
 
-os.chdir("E:\Bayu's Stuff\Work")
 
 file = open("Temporary_Book.txt","r")
 words = re.findall('\w+', file.read())
