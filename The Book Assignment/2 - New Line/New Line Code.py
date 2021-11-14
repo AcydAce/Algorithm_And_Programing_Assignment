@@ -1,15 +1,14 @@
 
 
 Old_Text = open("Old_Text.txt", "r")
-oldContent = Old_Text.readlines()
+Old_Textline = Old_Text.readlines()  # opens text file
 New_Text = open("New_Text.txt", "w")
 
-i = 1
+line = 1  # starting line
 
-for line in Old_Text:
-    New_Text.write(f"{i} "+line)
-    i += 1
-
+for i in Old_Textline:
+    New_Text.write(f"{line} "+i)  # insert number into each line
+    line += 1
 
 Old_Text.close()
 New_Text.close()
