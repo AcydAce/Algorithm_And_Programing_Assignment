@@ -1,29 +1,30 @@
-#A pair of list to convert special exceptions from and to back and forth
-Titles = ["Mr.", "Mrs.", "Dr.","Jr."]
-ReplaceTitles = ["Mister", "Missus", "Doctor","JR"]
-Internal = ["e.g.", "i.e."]
-ReplaceInternal = ["EG", "IE"]
+import re
 
-Text = input("Enter a short text: ")
+openText = open("Text.txt", "r")
+readText = openText.read()
+openText.close()
 
-for x in Titles: #Replaces titles with another name to prevent periods replacement
-     i = Titles.index(x)
-     Text = Text.replace(x, ReplaceTitles[i])
-for x in Internal: #Replaces periods internal with another name to prevent periods replacement
-     i = Internal.index(x)
-     Text = Text.replace(x, ReplaceTitles[i])
+Prefixes = "(Mr|St|Mrs|Ms|Dr)[.]"
+Suffixes = "(Inc|Ltd|Jr|Sr|Co)"
+Digits = "([0-9])"
+Websites = "[.](com|net|org|io|gov)"
+etc = "(i)[.](e)[.]"
 
-Text = Text.replace(". ", ".\n") #Replaces period with a period and new line
-Text = Text.replace("? ", "?\n") #Replaces question mark with a question mark and new line
-Text = Text.replace("! ", "!\n")  #Replaces exclamation mark with an exclamation mark and new line
+editText = readText.replace("\n"," ") # replaces line with space
+editText = re.sub(Prefixes,"\\1<prd>",editText) # avoids splitting after prefixes
+editText = re.sub(Websites,"<prd>\\1",editText) # avoids splitting between a website
+editText = re.sub(" "+Suffixes+"[.]"," \\1<prd>",editText) # avoid splitting after suffix
+editText = re.sub("[.]" + Digits,"<prd>\\1",editText) # avoids splitting at a period between 2 numbers
+editText = re.sub(Digits + "[.]" + Digits,"\\1<prd>\\2",editText) # avoids splitting at a period between after a number
+editText = re.sub(etc, "i<prd>e<prd>", editText)  # converts i.e. to i<prd>e<prd>
 
-for x in ReplaceTitles: #Reverts  new title name back to old name
-    i = ReplaceTitles.index(x)
-    Text = Text.replace(x, ReplaceTitles[i])
-for x in ReplaceInternal: #Reverts new internal name back to old name
-    i = ReplaceInternal.index(x)
-    Text = Text.replace(x, Internal[i])
+# adds a <stop> after sentence boundaries
+editText = editText.replace("...","<prd><prd><prd><stop>")
+editText = editText.replace(".",".<stop>")
+editText = editText.replace("?","?<stop>")
+editText = editText.replace("!","!<stop>")
+editText = editText.replace("<prd>",".")
+splitSentence = editText.split("<stop>")
+splitSentence = [sentence.strip() for sentence in splitSentence] # removes leading and trailing spaces
 
-file = open("result.txt", "w")
-file.write(Text) #Write the modified short text
-file.close()
+print(*splitSentence, sep="\n") # prints sentences
