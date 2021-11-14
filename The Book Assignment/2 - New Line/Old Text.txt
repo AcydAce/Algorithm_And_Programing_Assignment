@@ -1,0 +1,5 @@
+Greetings!
+I exist solely for the
+purpose of testing out
+a code located within
+the same file
