@@ -2,7 +2,7 @@ import re
 
 openText = open("Text.txt", "r")
 readText = openText.read()
-openText.close()
+
 
 Prefixes = "(Mr|St|Mrs|Ms|Dr)[.]"
 Suffixes = "(Inc|Ltd|Jr|Sr|Co)"
@@ -28,3 +28,6 @@ splitSentence = editText.split("<stop>")
 splitSentence = [sentence.strip() for sentence in splitSentence] # removes leading and trailing spaces
 
 print(*splitSentence, sep="\n") # prints sentences
+
+file = open("Text_Result.txt", "w")
+file.close()
